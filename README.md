@@ -27,16 +27,18 @@ La secuencia se acelera a medida que avanzan las rondas (hasta la ronda 10).
 
 ## Récord de jugadores y código de partida
 
-Igual que en la Caza relámpago: cada partida se guarda en una planilla de Google con su fecha, las rondas superadas y su código, y el resultado muestra el récord de todos los jugadores.
+Este juego usa **la misma planilla de Google que la Caza relámpago**, con la misma URL. Cada juego guarda sus partidas en su propia hoja y tiene su propio récord, así que no se mezclan:
 
-**Conviene usar una planilla nueva para este juego**, para que sus puntajes (rondas) no se mezclen con los de la Caza relámpago:
+| Juego | Hoja | Columnas |
+| --- | --- | --- |
+| Caza relámpago | "Puntajes" | Fecha, Puntaje, Código |
+| Salcotín dice | "Salcotín dice" | Fecha, Rondas, Código |
 
-1. Crea una planilla nueva, por ejemplo "Récord Salcotín dice".
-2. En **Extensiones → Apps Script**, pega el mismo `Codigo.gs` de la Caza relámpago y guarda.
-3. **Implementar → Nueva implementación → Aplicación web**, con "Ejecutar como: Yo" y "Quién tiene acceso: Cualquier persona". Copia la URL que termina en `/exec`.
-4. Pégala en `RECORD_URL`, al inicio de `js/main.js`.
+La hoja "Salcotín dice" se crea sola con la primera partida. Para que funcione, la planilla tiene que tener el `Codigo.gs` actualizado (el que acepta varios juegos) y publicado como **nueva versión**.
 
-Si `RECORD_URL` queda vacía, el juego funciona igual: muestra el código de la partida, pero sin récord ni registro en la planilla.
+En `js/main.js`, `RECORD_URL` es la URL de la planilla y `GAME_ID: 'dice'` le indica a la planilla que la partida es de este juego.
+
+**Reiniciar el récord:** en Apps Script, ejecuta `reiniciarRecordSalcotinDice` (solo afecta a este juego) o `reiniciarRecordCaza` (solo a la Caza relámpago).
 
 ## Cómo funciona por dentro
 

@@ -40,9 +40,11 @@ const CONFIG = {
   SMOOTHING: 0.35,           // 0 a 1: más bajo = movimiento más suave
 
   // Récord compartido entre todos los jugadores (Google Sheets + Apps Script).
-  // Pega aquí la URL de tu "Aplicación web" (termina en /exec). Si queda vacía
-  // o la planilla no responde, el juego funciona igual, sin mostrar el récord.
-  RECORD_URL: '',
+  // Es la misma planilla que la Caza relámpago: este juego guarda sus partidas
+  // en su propia hoja ("Salcotín dice") y tiene su propio récord.
+  // Si la planilla no responde, el juego funciona igual, sin mostrar el récord.
+  RECORD_URL: 'https://script.google.com/macros/s/AKfycbzzpm71QdnOGZ9dQs6hrLSvIZdhA0kY-liu1M-qBMYX9yXfmc477a40CDJWM11PLA/exec',
+  GAME_ID: 'dice',           // identifica a este juego en la planilla
   RECORD_TIMEOUT_MS: 6000,
 }
 
@@ -607,7 +609,7 @@ async function submitScore(points, code) {
   const timer = setTimeout(() => controller.abort(), CONFIG.RECORD_TIMEOUT_MS)
   try {
     const url = CONFIG.RECORD_URL + '?action=submit&score=' + encodeURIComponent(points) +
-      '&code=' + encodeURIComponent(code)
+      '&code=' + encodeURIComponent(code) + '&game=' + encodeURIComponent(CONFIG.GAME_ID)
     const res = await fetch(url, { signal: controller.signal })
     const data = await res.json()
     return data && data.ok ? data : null
